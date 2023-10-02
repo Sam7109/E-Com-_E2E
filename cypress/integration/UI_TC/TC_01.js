@@ -1,10 +1,55 @@
+describe('Test cases for Home Page', () => {
 
+    it('Visit the target page',()=>{
+        cy.visit('https://crio-qkart-frontend-qa.vercel.app/');
+        cy.wait(4000)
 
-describe('My Ecom-Login tesstcase ', function(){
+        //Should return no product found in case if special character is entered 
+        cy.get("input[name='search']")
+        .first()
+        .type("!!!")
+        cy.wait(3000)
+        cy.get("div[class='loading MuiBox-root css-0'] h4")
+        .should('have.text', " No products found ");
+        cy.wait(4000);
+        
+    
+         /// Registering a user 
+        cy.get('button.css-177pwqq')
+          .click();
+        cy.get('#username')
+          .type("firstuser");
+        cy.get('#password')
+          .type("firstuserpassword");
+        cy.get('#confirmPassword')
+          .type('firstuserpassword');
+          cy.get('.css-177pwqq')
+          .first()
+          .click();
+          cy.wait(4000)
+          //if user already exist display 
+            cy.get('#notistack-snackbar')
+            .should('have.text', 'Username already exists');
+        
+        // if already a user click on login 
+        cy.get('.secondary-action')
+        .first()
+        .click();
+           //check whether user with invalid credentials cannot login and throws appropriate error 
+           cy.get("input[id='username']")
+           .type("#dfnfsififn@gmail.com")
+           cy.get("input[name='password']")
+           .type("756585454")
+           cy.get('button.css-177pwqq')
+           .first()
+           .click();
 
-it('Navigating to the target page',function(){
+           //if invalid user check error is thrown 
+           cy.get('#notistack-snackbar')
+          .should('have.text', 'Username does not exist');
+        
 
-    cy.visit("https://crio-qkart-frontend-qa.vercel.app/");
-})
+          
 
-})
+  });
+});
