@@ -57,6 +57,18 @@ describe('My Test Suite for Add to Cart', () => {
        .type('type your address in this field')
        cy.get('.css-19a1170 > .MuiButton-contained')
        .click();
+       //select address
+       cy.get('input.css-1m9pwf3 ')
+       .first()
+       .click()
+       //place order 
+
+       cy.contains('PLACE ORDER')
+       .click();
+       //check order confirmation
+       cy.url().should('eq', 'https://crio-qkart-frontend-qa.vercel.app/thanks'); 
+       // Replace with the expected success URL
+     
       });
       });
         
